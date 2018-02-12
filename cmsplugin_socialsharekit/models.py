@@ -96,7 +96,7 @@ class SocialShareKitPlugin(CMSPlugin):
     )
     center = models.BooleanField(
         _('center'),
-        default=False
+        default=SOCIALBUTTON_CENTER
     )
     button_position = models.CharField(
         _('buttons position'),
@@ -121,3 +121,14 @@ class SocialShareKitPlugin(CMSPlugin):
             button.pk = None
             button.plugin = self
             button.save()
+
+
+def create_default_socialbuttons(sender, instance, *args, **kwargs):
+    if instance.buttons.count() == 0 and DEFAULT_SOCIALBUTTONS:
+        for button in DEFAULT_SOCIALBUTTONS:
+            if isinstance(button, basestring):
+                instance.buttons.create(button=button)
+            if isinstance(button, dict):
+                instance.buttons.create(**button)
+            
+models.signals.post_save.connect(create_default_socialbuttons, SocialShareKitPlugin)

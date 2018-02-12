@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -14,7 +14,7 @@ SOCIALBUTTONS = [
     ('buffer', _('Buffer')),
     ('email', _('Email')),
 ]
-DEFAULT_SOCIALBUTTON = SOCIALBUTTONS[0][0]
+DEFAULT_SOCIALBUTTONS = getattr(settings, 'SSK_DEFAULT_SOCIALBUTTONS', [])
 
 SOCIALBUTTON_STYLES = [
     ('square', _('Square')),
@@ -36,3 +36,4 @@ SOCIALBUTTON_POSITIONS = [
     ('right', _('Right side')),
     ('bottom', _('Bottom')),
 ]
+SOCIALBUTTON_CENTER=getattr(settings, 'SSK_SOCIALBUTTONS_CENTER', False)

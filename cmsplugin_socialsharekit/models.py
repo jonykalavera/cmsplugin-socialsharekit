@@ -44,9 +44,10 @@ class SocialButton(models.Model):
     class Meta(object):
         ordering = ['order',]
 
-    def __str__(self):
+    def __unicode__(self):
         if self.button:
             return self.get_button_display()
+        return unicode(self.id)
 
 
 class SocialShareKitPlugin(CMSPlugin):
